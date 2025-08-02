@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const nameInput = document.getElementById('userInput') as HTMLInputElement;
-  const todoInput = document.getElementById('todoInput') as HTMLInputElement;
-  const addBtn    = document.getElementById('submit-data') as HTMLButtonElement;
-  const status    = document.getElementById('status')  as HTMLElement;
+  const nameInput   = document.getElementById('userInput')   as HTMLInputElement;
+  const todoInput   = document.getElementById('todoInput')   as HTMLInputElement;
+  const addBtn      = document.getElementById('submit-data') as HTMLButtonElement;
+  const status      = document.getElementById('status')      as HTMLElement;
 
-  const searchName = document.getElementById('searchName') as HTMLInputElement;
-  const searchBtn  = document.getElementById('searchBtn')  as HTMLButtonElement;
-  const list       = document.getElementById('todoList')  as HTMLUListElement;
+  const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+  const searchBtn   = document.getElementById('searchBtn')   as HTMLButtonElement;
+  const list        = document.getElementById('todoList')    as HTMLUListElement;
 
   addBtn.addEventListener('click', async () => {
     const res = await fetch('/add', {
@@ -22,9 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
       todoInput.value = '';
     }
   });
-
   searchBtn.addEventListener('click', async () => {
-    const res = await fetch(`/todos/${searchName.value}`);
+    const res = await fetch(`/todos/${searchInput.value}`);
     if (!res.ok) return;
     const todos: { todo: string; checked: boolean }[] = await res.json();
     list.innerHTML = '';
@@ -33,16 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const label = document.createElement('label');
 
       const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.className = 'checkBoxes';
-      cb.id = 'myCheckbox';
-      cb.checked = t.checked;
+      cb.type        = 'checkbox';
+      cb.className   = 'checkBoxes';
+      cb.id          = 'myCheckbox';
+      cb.checked     = t.checked;
       cb.addEventListener('change', async () => {
         await fetch('/updateTodo', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: searchName.value,
+            name: searchInput.value,
             todo: t.todo,
             checked: cb.checked
           })
@@ -51,15 +50,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const span = document.createElement('span');
       const a    = document.createElement('a');
-      a.href = '#';
-      a.className = 'delete-task';
-      a.innerText = t.todo;
+      a.href       = '#';
+      a.className  = 'delete-task';
+      a.innerText  = t.todo;
       a.addEventListener('click', async () => {
         await fetch('/update', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: searchName.value,
+            name: searchInput.value,
             todo: t.todo
           })
         });
