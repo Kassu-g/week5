@@ -45,6 +45,7 @@ app.get('/todos/:name', async (req: Request, res: Response) => {
 });
 
 
+
 app.put('/update', async (req: Request, res: Response) => {
   const { name, todo } = req.body as { name: string; todo: string };
   const user = await User.findOne({ name });

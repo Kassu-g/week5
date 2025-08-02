@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const addBtn      = document.getElementById('submit-data') as HTMLButtonElement;
   const status      = document.getElementById('status')      as HTMLElement;
 
+  const searchForm  = document.getElementById('search')      as HTMLFormElement;
   const searchInput = document.getElementById('searchInput') as HTMLInputElement;
-  const searchBtn   = document.getElementById('searchBtn')   as HTMLButtonElement;
   const list        = document.getElementById('todoList')    as HTMLUListElement;
 
   addBtn.addEventListener('click', async () => {
@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
       todoInput.value = '';
     }
   });
-  searchBtn.addEventListener('click', async () => {
+
+  searchForm.addEventListener('submit', async e => {
+    e.preventDefault();
     const res = await fetch(`/todos/${searchInput.value}`);
     if (!res.ok) return;
     const todos: { todo: string; checked: boolean }[] = await res.json();
@@ -32,10 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const label = document.createElement('label');
 
       const cb = document.createElement('input');
-      cb.type        = 'checkbox';
-      cb.className   = 'checkBoxes';
-      cb.id          = 'myCheckbox';
-      cb.checked     = t.checked;
+      cb.type      = 'checkbox';
+      cb.className = 'checkBoxes';
+      cb.id        = 'myCheckbox';
+      cb.checked   = t.checked;
       cb.addEventListener('change', async () => {
         await fetch('/updateTodo', {
           method: 'PUT',
@@ -50,9 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const span = document.createElement('span');
       const a    = document.createElement('a');
-      a.href       = '#';
-      a.className  = 'delete-task';
-      a.innerText  = t.todo;
+      a.href      = '#';
+      a.className = 'delete-task';
+      a.innerText = t.todo;
       a.addEventListener('click', async () => {
         await fetch('/update', {
           method: 'PUT',
