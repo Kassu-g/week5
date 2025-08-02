@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const nameInput = document.getElementById('name')    as HTMLInputElement;
-  const todoInput = document.getElementById('newTodo') as HTMLInputElement;
-  const addBtn    = document.getElementById('addBtn')  as HTMLButtonElement;
-  const status    = document.getElementById('status') as HTMLElement;
+  const nameInput = document.getElementById('userInput') as HTMLInputElement;
+  const todoInput = document.getElementById('todoInput') as HTMLInputElement;
+  const addBtn    = document.getElementById('addTodo') as HTMLButtonElement;
+  const status    = document.getElementById('status')  as HTMLElement;
 
   const searchName = document.getElementById('searchName') as HTMLInputElement;
   const searchBtn  = document.getElementById('searchBtn')  as HTMLButtonElement;
@@ -12,7 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const res = await fetch('/add', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: nameInput.value, todo: todoInput.value })
+      body: JSON.stringify({
+        name: nameInput.value,
+        todo: todoInput.value
+      })
     });
     if (res.ok) {
       status.innerText = 'Todo added successfully.';
@@ -32,13 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const cb = document.createElement('input');
       cb.type = 'checkbox';
       cb.className = 'checkBoxes';
-      cb.checked = t.checked;
       cb.id = 'myCheckbox';
+      cb.checked = t.checked;
       cb.addEventListener('change', async () => {
         await fetch('/updateTodo', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: searchName.value, todo: t.todo, checked: cb.checked })
+          body: JSON.stringify({
+            name: searchName.value,
+            todo: t.todo,
+            checked: cb.checked
+          })
         });
       });
 
@@ -51,7 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
         await fetch('/update', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: searchName.value, todo: t.todo })
+          body: JSON.stringify({
+            name: searchName.value,
+            todo: t.todo
+          })
         });
         li.remove();
       });
