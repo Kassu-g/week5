@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const nameInput = document.getElementById('userInput') as HTMLInputElement;
   const todoInput = document.getElementById('todoInput') as HTMLInputElement;
-  const addBtn    = document.getElementById('addTodo') as HTMLButtonElement;
+  const addBtn    = document.getElementById('submit-data') as HTMLButtonElement;
   const status    = document.getElementById('status')  as HTMLElement;
 
   const searchName = document.getElementById('searchName') as HTMLInputElement;
