@@ -41,8 +41,9 @@ app.get('/todos/:name', async (req: Request, res: Response) => {
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
   }
-  res.json(user.todos);
+  res.json(user);
 });
+
 
 app.put('/update', async (req: Request, res: Response) => {
   const { name, todo } = req.body as { name: string; todo: string };
@@ -54,6 +55,8 @@ app.put('/update', async (req: Request, res: Response) => {
   await user.save();
   res.json(user.todos);
 });
+
+
 
 app.put('/updateTodo', async (req: Request, res: Response) => {
   const { name, todo, checked } = req.body as { name: string; todo: string; checked: boolean };

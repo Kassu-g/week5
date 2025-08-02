@@ -50,7 +50,7 @@ app.get('/todos/:name', (req, res) => __awaiter(void 0, void 0, void 0, function
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
-    res.json(user.todos);
+    res.json(user);
 }));
 app.put('/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, todo } = req.body;
